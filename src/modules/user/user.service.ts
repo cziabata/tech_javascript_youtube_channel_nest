@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/user.model';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDTO } from './dto';
-import { APP_ERRORS } from 'src/common/errors';
+import { APP_ERRORS } from 'src/common/constants/errors';
 
 @Injectable()
 export class UserService {
@@ -18,12 +18,6 @@ export class UserService {
   }
 
   async createUser(dto: CreateUserDTO): Promise<CreateUserDTO> {
-    const existUser = await this.findUserByEmail(dto.email);
-
-    if(existUser) {
-      throw new BadRequestException(APP_ERRORS.USER_EXIST)
-    }
-
     dto.password = await this.hashPassword(dto.password); 
     await this.userRpository.create({
       firstName: dto.firstName,

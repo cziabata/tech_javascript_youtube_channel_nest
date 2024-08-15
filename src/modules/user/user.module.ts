@@ -9,6 +9,7 @@ import { User } from './models/user.model';
     User
   ])],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
